@@ -1,1 +1,103 @@
-<p>uncommon-page works!</p>,
+<section class="mx-10 my-5 mb-5">
+  <h1 class="text-2xl font-bold">Uncommon Pipes</h1>
+  <h3 class="text-lg font-thin">Learn about the Uncommon Pipes in Angular</h3>
+</section>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <app-card title="i18nSelectPipe">
+    <p>
+      Saludos {{ client().name }}, es un placer
+      {{ client().gender | i18nSelect : invitationMap }} a nuestro evento.
+    </p>
+
+    <button class="btn btn-primary" (click)="changeClient()">
+      Cambiar Cliente
+    </button>
+  </app-card>
+
+  <app-card title="i18nPluralPipe">
+    <p>Actualmente {{ clients().length | i18nPlural : clientsMap() }}</p>
+
+    <button
+      class="btn btn-primary"
+      [disabled]="clients().length === 0"
+      (click)="deleteClient()"
+    >
+      Borrar Cliente
+    </button>
+  </app-card>
+
+  <app-card title="SlicePipe">
+    <b>Original</b>
+    <p class="text-primary">
+      {{ clients().join(", ") }}
+    </p>
+
+    <b class="mt-2">Slice:0:2</b>
+    <p class="text-primary">
+      {{ clients() | slice : 0 : 2 }}
+    </p>
+
+    <b class="mt-2">Slice:1:2</b>
+    <p class="text-primary">
+      {{ clients() | slice : 1 : 2 }}
+    </p>
+
+    <b class="mt-2">Slice:3:7</b>
+    <p class="text-primary">
+      {{ clients() | slice : 3 : 7 }}
+    </p>
+
+    <b class="mt-2">Slice:0:-3</b>
+    <p class="text-primary">
+      {{ clients() | slice : 0 : -3 }}
+    </p>
+  </app-card>
+
+  <app-card title="JsonPipe">
+    <pre class="text-primary">{{ clients() | json }}</pre>
+    <pre class="text-primary">{{ client() | json }}</pre>
+    <p class="text-primary">
+      {{ clients().join(", ") | json | uppercase }}
+    </p>
+  </app-card>
+
+  <app-card title="KeyValuePipe">
+    <!-- <pre>{{ profile | keyvalue | json }}</pre> -->
+
+    <ul>
+      @for (item of profile | keyvalue; track $index) {
+      <li>
+        <strong class="text-primary">{{ item.key | titlecase }}:</strong>
+        <span>
+          {{ item.value }}
+        </span>
+      </li>
+
+      }
+    </ul>
+  </app-card>
+
+  <app-card title="AsyncPipe">
+    <p>
+      <!-- {{ promiseValue | async }} -->
+    </p>
+
+    @if( promiseValue | async; as value) {
+    <!-- <p class="text-primary">{{ value }}</p> -->
+    }@else {
+    <p class="text-accent">Espere por favor...</p>
+    }
+
+    <!-- Async Pipe with Observables -->
+    <h3>Observable Timer</h3>
+    <p>
+      <!-- {{ myObservableTimer | async }} -->
+    </p>
+    @if(myObservableTimer | async; as obsValue) {
+    <!-- <p class="text-primary">Valor: {{ obsValue }}</p> -->
+    }@else {
+    <p class="text-accent">Esperando primer valor...</p>
+    }
+  </app-card>
+</div>
